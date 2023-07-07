@@ -30,7 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private static final String SETTINGS_TRANSLATE = "settings_translate";
     private static final String SETTINGS_BUG_REPORT = "settings_bug_report";
     private static final String SETTINGS_PATREON = "settings_patreon";
-    private static final String SETTINGS_CROSS_PROFILE_FILE_CHOOSER = "settings_cross_profile_file_chooser";
+    private static final String SETTINGS_FILE_SHUTTLE = "settings_file_shuttle";
     private static final String SETTINGS_CAMERA_PROXY = "settings_camera_proxy";
     private static final String SETTINGS_BLOCK_CONTACTS_SEARCHING = "settings_block_contacts_searching";
     private static final String SETTINGS_AUTO_FREEZE_SERVICE = "settings_auto_freeze_service";
@@ -40,7 +40,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private SettingsManager mManager = SettingsManager.getInstance();
     private IShelterService mServiceWork = null;
 
-    private CheckBoxPreference mPrefCrossProfileFileChooser = null;
+    private CheckBoxPreference mPrefFileShuttle = null;
     private CheckBoxPreference mPrefCameraProxy = null;
     private CheckBoxPreference mPrefBlockContactsSearching = null;
     private CheckBoxPreference mPrefAutoFreezeService = null;
@@ -74,9 +74,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 .setOnPreferenceClickListener(this::openSummaryUrl);
 
         // === Interactions ===
-        mPrefCrossProfileFileChooser = (CheckBoxPreference) findPreference(SETTINGS_CROSS_PROFILE_FILE_CHOOSER);
-        mPrefCrossProfileFileChooser.setChecked(mManager.getCrossProfileFileChooserEnabled());
-        mPrefCrossProfileFileChooser.setOnPreferenceChangeListener(this);
+        mPrefFileShuttle = (CheckBoxPreference) findPreference(SETTINGS_FILE_SHUTTLE);
+        mPrefFileShuttle.setChecked(mManager.getFileShuttleEnabled());
+        mPrefFileShuttle.setOnPreferenceChangeListener(this);
         mPrefCameraProxy = (CheckBoxPreference) findPreference(SETTINGS_CAMERA_PROXY);
         mPrefCameraProxy.setChecked(mManager.getCameraProxyEnabled());
         mPrefCameraProxy.setOnPreferenceChangeListener(this);
@@ -98,7 +98,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         // Disable FileSuttle on Q for now
         // Supported on R and beyond
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-            mPrefCrossProfileFileChooser.setEnabled(false);
+            mPrefFileShuttle.setEnabled(false);
         }
 
         // Disable fake camera on R because third-party camera activities are now unsupported
@@ -111,7 +111,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         // is not allowed on Go devices
         ActivityManager am = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
         if (am.isLowRamDevice()) {
-            mPrefCrossProfileFileChooser.setEnabled(false);
+            mPrefFileShuttle.setEnabled(false);
         }
     }
 
@@ -144,10 +144,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newState) {
-        if (preference == mPrefCrossProfileFileChooser) {
+        if (preference == mPrefFileShuttle) {
             boolean enabled = (boolean) newState;
             if (!enabled) {
-                mManager.setCrossProfileFileChooserEnabled(false);
+                mManager.setFileShuttleEnabled(false);
                 return true;
             }
 
@@ -185,7 +185,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 }
             }
 
-            mManager.setCrossProfileFileChooserEnabled(true);
+            mManager.setFileShuttleEnabled(true);
             return true;
         } else if (preference == mPrefCameraProxy) {
             mManager.setCameraProxyEnabled(((boolean) newState));

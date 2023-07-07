@@ -46,13 +46,13 @@ public class SettingsManager {
 
     // Enforce all settings
     public void applyAll() {
-        applyCrossProfileFileChooser();
+        applyFileShuttle();
         applyCameraProxy();
     }
 
     // Read and apply the enabled state of the cross profile file chooser
-    public void applyCrossProfileFileChooser() {
-        boolean enabled = mStorage.getBoolean(LocalStorageManager.PREF_CROSS_PROFILE_FILE_CHOOSER);
+    public void applyFileShuttle() {
+        boolean enabled = mStorage.getBoolean(LocalStorageManager.PREF_FILE_SHUTTLE);
         mContext.getPackageManager().setComponentEnabledSetting(
                 new ComponentName(mContext, CrossProfileDocumentsProvider.class),
                 enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -69,15 +69,15 @@ public class SettingsManager {
     }
 
     // Set the enabled state of the cross profile file chooser
-    public void setCrossProfileFileChooserEnabled(boolean enabled) {
-        mStorage.setBoolean(LocalStorageManager.PREF_CROSS_PROFILE_FILE_CHOOSER, enabled);
-        applyCrossProfileFileChooser();
-        syncSettingsToProfileBool(LocalStorageManager.PREF_CROSS_PROFILE_FILE_CHOOSER, enabled);
+    public void setFileShuttleEnabled(boolean enabled) {
+        mStorage.setBoolean(LocalStorageManager.PREF_FILE_SHUTTLE, enabled);
+        getFileShuttleEnabled();
+        syncSettingsToProfileBool(LocalStorageManager.PREF_FILE_SHUTTLE, enabled);
     }
 
     // Get the enabled state of the cross profile file chooser
-    public boolean getCrossProfileFileChooserEnabled() {
-        return mStorage.getBoolean(LocalStorageManager.PREF_CROSS_PROFILE_FILE_CHOOSER);
+    public boolean getFileShuttleEnabled() {
+        return mStorage.getBoolean(LocalStorageManager.PREF_FILE_SHUTTLE);
     }
 
     // Set the enabled state of the cross profile file chooser
