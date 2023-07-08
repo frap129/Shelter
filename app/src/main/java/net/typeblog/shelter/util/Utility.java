@@ -27,6 +27,7 @@ import android.os.Environment;
 import android.os.UserManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.contract.ActivityResultContract;
@@ -122,6 +123,7 @@ public class Utility {
     public static void enforceWorkProfilePolicies(Context context) {
         DevicePolicyManager manager = context.getSystemService(DevicePolicyManager.class);
         ComponentName adminComponent = new ComponentName(context.getApplicationContext(), ShelterDeviceAdminReceiver.class);
+        SettingsManager settings = SettingsManager.getInstance();
 
         // Hide this app in the work profile
         context.getPackageManager().setComponentEnabledSetting(
@@ -188,6 +190,7 @@ public class Utility {
                 new IntentFilter(DummyActivity.UNINSTALL_PACKAGE),
                 DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
 
+
         // Allow ACTION_SEND and ACTION_SEND_MULTIPLE to cross from managed to parent
         // TODO: Make this configurable
         IntentFilter actionSendFilter = new IntentFilter();
@@ -229,6 +232,86 @@ public class Utility {
                 SettingsManager.getInstance().getBlockContactsSearchingEnabled());
 
         manager.setProfileEnabled(adminComponent);
+
+        // Cross Profile DocumentsUI Folder Picker
+        if (settings.getParentPickFolderEnabled() || settings.getManagedPickFolderEnabled()) {
+            IntentFilter folderPickerIntentFilter = new IntentFilter(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            folderPickerIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+            if (settings.getManagedPickFolderEnabled()) {
+                manager.addCrossProfileIntentFilter(
+                        adminComponent,
+                        folderPickerIntentFilter,
+                        DevicePolicyManager.FLAG_PARENT_CAN_ACCESS_MANAGED);
+            }
+            if (settings.getParentPickFolderEnabled()) {
+                manager.addCrossProfileIntentFilter(
+                        adminComponent,
+                        folderPickerIntentFilter,
+                        DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
+            }
+        }
+
+
+        // Cross Profile DocumentsUI File Picker
+        if (settings.getParentPickFileEnabled() || settings.getManagedPickFileEnabled()) {
+            try {
+                IntentFilter filePickerIntentFilter = new IntentFilter(Intent.ACTION_OPEN_DOCUMENT);
+                filePickerIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+                filePickerIntentFilter.addDataType("*/*");
+                if (settings.getManagedPickFileEnabled()) {
+                    manager.addCrossProfileIntentFilter(
+                            adminComponent,
+                            filePickerIntentFilter,
+                            DevicePolicyManager.FLAG_PARENT_CAN_ACCESS_MANAGED);
+                }
+                if (settings.getParentPickFileEnabled()) {
+                    manager.addCrossProfileIntentFilter(
+                            adminComponent,
+                            filePickerIntentFilter,
+                            DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
+                }
+
+                // For intents that only look for openable files
+                filePickerIntentFilter.addCategory(Intent.CATEGORY_OPENABLE);
+                if (settings.getManagedPickFileEnabled()) {
+                    manager.addCrossProfileIntentFilter(
+                            adminComponent,
+                            filePickerIntentFilter,
+                            DevicePolicyManager.FLAG_PARENT_CAN_ACCESS_MANAGED);
+                }
+                if (settings.getParentPickFileEnabled()) {
+                    manager.addCrossProfileIntentFilter(
+                            adminComponent,
+                            filePickerIntentFilter,
+                            DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
+                }
+            } catch (IntentFilter.MalformedMimeTypeException ignored) {
+                // WTF?
+            }
+        }
+
+        // Cross Profile Any File Picker
+        if (settings.getParentUseFilePickerEnabled() || settings.getManagedUseFilePickerEnabled()) {
+            try {
+                IntentFilter anyFilePickerIntentFilter = new IntentFilter(Intent.ACTION_PICK);
+                anyFilePickerIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+                anyFilePickerIntentFilter.addDataType("*/*");
+                if (settings.getManagedUseFilePickerEnabled()) {
+                    manager.addCrossProfileIntentFilter(
+                            adminComponent,
+                            anyFilePickerIntentFilter,
+                            DevicePolicyManager.FLAG_PARENT_CAN_ACCESS_MANAGED);
+                }
+                if (settings.getParentUseFilePickerEnabled()) {
+                    manager.addCrossProfileIntentFilter(
+                            adminComponent,
+                            anyFilePickerIntentFilter,
+                            DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
+                }
+            } catch (IntentFilter.MalformedMimeTypeException ignored) {
+                // WTF?
+            }
+        }
     }
 
     public static void enforceUserRestrictions(Context context) {

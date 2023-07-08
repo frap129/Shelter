@@ -37,6 +37,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private static final String SETTINGS_AUTO_FREEZE_DELAY = "settings_auto_freeze_delay";
     private static final String SETTINGS_SKIP_FOREGROUND = "settings_dont_freeze_foreground";
 
+    private static final String SETTINGS_PARENT_PICK_FOLDER = "settings_parent_pick_folder";
+    private static final String SETTINGS_MANAGED_PICK_FOLDER = "settings_managed_pick_folder";
+    private static final String SETTINGS_PARENT_PICK_FILE = "settings_parent_pick_file";
+    private static final String SETTINGS_MANAGED_PICK_FILE = "settings_managed_pick_file";
+    private static final String SETTINGS_PARENT_USE_FILE_PICKER = "settings_parent_use_file_picker";
+    private static final String SETTINGS_MANAGED_USE_FILE_PICKER = "settings_managed_use_file_picker";
+
     private SettingsManager mManager = SettingsManager.getInstance();
     private IShelterService mServiceWork = null;
 
@@ -45,6 +52,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private CheckBoxPreference mPrefBlockContactsSearching = null;
     private CheckBoxPreference mPrefAutoFreezeService = null;
     private CheckBoxPreference mPrefSkipForeground = null;
+
+    private CheckBoxPreference mPrefParentPickFolder = null;
+    private CheckBoxPreference mPrefManagedPickFolder = null;
+    private CheckBoxPreference mPrefParentPickFile = null;
+    private CheckBoxPreference mPrefManagedPickFile = null;
+    private CheckBoxPreference mPrefParentUseFilePicker = null;
+    private CheckBoxPreference mPrefManagedUseFilePicker = null;
 
     private Preference mPrefAutoFreezeDelay = null;
 
@@ -94,6 +108,27 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         mPrefSkipForeground = (CheckBoxPreference) findPreference(SETTINGS_SKIP_FOREGROUND);
         mPrefSkipForeground.setChecked(mManager.getSkipForegroundEnabled());
         mPrefSkipForeground.setOnPreferenceChangeListener(this);
+
+        // === Intents ===
+        mPrefParentPickFolder = (CheckBoxPreference) findPreference(SETTINGS_PARENT_PICK_FOLDER);
+        mPrefParentPickFolder.setChecked(mManager.getParentPickFolderEnabled());
+        mPrefParentPickFolder.setOnPreferenceChangeListener(this);
+        mPrefManagedPickFolder = (CheckBoxPreference) findPreference(SETTINGS_MANAGED_PICK_FOLDER);
+        mPrefManagedPickFolder.setChecked(mManager.getManagedPickFolderEnabled());
+        mPrefManagedPickFolder.setOnPreferenceChangeListener(this);
+        mPrefParentPickFile = (CheckBoxPreference) findPreference(SETTINGS_PARENT_PICK_FILE);
+        mPrefParentPickFile.setChecked(mManager.getParentPickFileEnabled());
+        mPrefParentPickFile.setOnPreferenceChangeListener(this);
+        mPrefManagedPickFile = (CheckBoxPreference) findPreference(SETTINGS_MANAGED_PICK_FILE);
+        mPrefManagedPickFile.setChecked(mManager.getManagedPickFileEnabled());
+        mPrefManagedPickFile.setOnPreferenceChangeListener(this);
+        mPrefParentUseFilePicker = (CheckBoxPreference) findPreference(SETTINGS_PARENT_USE_FILE_PICKER);
+        mPrefParentUseFilePicker.setChecked(mManager.getParentUseFilePickerEnabled());
+        mPrefParentUseFilePicker.setOnPreferenceChangeListener(this);
+        mPrefManagedUseFilePicker = (CheckBoxPreference) findPreference(SETTINGS_MANAGED_PICK_FOLDER);
+        mPrefManagedUseFilePicker.setChecked(mManager.getManagedUseFilePickerEnabled());
+        mPrefManagedUseFilePicker.setOnPreferenceChangeListener(this);
+
 
         // Disable FileSuttle on Q for now
         // Supported on R and beyond
@@ -215,6 +250,24 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 return false;
 
             mManager.setSkipForegroundEnabled(true);
+            return true;
+        } else if (preference == mPrefParentPickFolder) {
+            mManager.setParentPickFolderEnabled((boolean) newState);
+            return true;
+        } else if (preference == mPrefManagedPickFolder) {
+            mManager.setManagedPickFolderEnabled((boolean) newState);
+            return true;
+        } else if (preference == mPrefParentPickFile) {
+            mManager.setParentPickFolderEnabled((boolean) newState);
+            return true;
+        } else if (preference == mPrefManagedPickFile) {
+            mManager.setManagedPickFileEnabled((boolean) newState);
+            return true;
+        } else if (preference == mPrefParentUseFilePicker) {
+            mManager.setParentUseFilePickerEnabled((boolean) newState);
+            return true;
+        } else if (preference == mPrefManagedUseFilePicker) {
+            mManager.setManagedUseFilePickerEnabled((boolean) newState);
             return true;
         } else {
             return false;

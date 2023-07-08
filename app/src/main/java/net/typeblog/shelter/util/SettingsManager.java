@@ -140,4 +140,73 @@ public class SettingsManager {
     public boolean getSkipForegroundEnabled() {
         return mStorage.getBoolean(LocalStorageManager.PREF_DONT_FREEZE_FOREGROUND);
     }
+
+    // Set the enabled state of "parent pick folder"
+    public void setParentPickFolderEnabled(boolean enabled) {
+        mStorage.setBoolean(LocalStorageManager.PREF_PARENT_PICK_FOLDER, enabled);
+        syncSettingsToProfileBool(LocalStorageManager.PREF_PARENT_PICK_FOLDER, enabled);
+    }
+
+    // Get the enabled state of "parent pick folder"
+    public boolean getParentPickFolderEnabled() {
+        return mStorage.getBoolean(LocalStorageManager.PREF_PARENT_PICK_FOLDER);
+    }
+
+
+    // Set the enabled state of "managed pick folder"
+    public void setManagedPickFolderEnabled(boolean enabled) {
+        mStorage.setBoolean(LocalStorageManager.PREF_MANAGED_PICK_FOLDER, enabled);
+        syncSettingsToProfileBool(LocalStorageManager.PREF_MANAGED_PICK_FOLDER, enabled);
+    }
+
+    // Get the enabled state of "managed pick folder"
+    public boolean getManagedPickFolderEnabled() {
+        return mStorage.getBoolean(LocalStorageManager.PREF_MANAGED_PICK_FOLDER);
+    }
+
+    // Set the enabled state of "parent pick file"
+    public void setParentPickFileEnabled(boolean enabled) {
+        mStorage.setBoolean(LocalStorageManager.PREF_PARENT_PICK_FILE, enabled);
+        syncSettingsToProfileBool(LocalStorageManager.PREF_PARENT_PICK_FILE, enabled);
+    }
+
+    // Get the enabled state of "parent pick file"
+    public boolean getParentPickFileEnabled() {
+        return mStorage.getBoolean(LocalStorageManager.PREF_PARENT_PICK_FILE);
+    }
+
+
+    // Set the enabled state of "managed pick file"
+    public void setManagedPickFileEnabled(boolean enabled) {
+        mStorage.setBoolean(LocalStorageManager.PREF_MANAGED_PICK_FILE, enabled);
+        syncSettingsToProfileBool(LocalStorageManager.PREF_MANAGED_PICK_FILE, enabled);
+    }
+
+    // Get the enabled state of "managed pick file"
+    public boolean getManagedPickFileEnabled() {
+        return mStorage.getBoolean(LocalStorageManager.PREF_MANAGED_PICK_FILE);
+    }
+
+    // Set the enabled state of "parent use file picker"
+    public void setParentUseFilePickerEnabled(boolean enabled) {
+        mStorage.setBoolean(LocalStorageManager.PREF_PARENT_USE_FILE_PICKER, enabled);
+        syncSettingsToProfileBool(LocalStorageManager.PREF_PARENT_USE_FILE_PICKER, enabled);
+    }
+
+    // Get the enabled state of "parent use file picker"
+    public boolean getParentUseFilePickerEnabled() {
+        return mStorage.getBoolean(LocalStorageManager.PREF_PARENT_USE_FILE_PICKER);
+    }
+
+
+    // Set the enabled state of "managed use file picker"
+    public void setManagedUseFilePickerEnabled(boolean enabled) {
+        mStorage.setBoolean(LocalStorageManager.PREF_MANAGED_USE_FILE_PICKER, enabled);
+        syncSettingsToProfileBool(LocalStorageManager.PREF_MANAGED_USE_FILE_PICKER, enabled);
+    }
+
+    // Get the enabled state of "managed use file picker"
+    public boolean getManagedUseFilePickerEnabled() {
+        return mStorage.getBoolean(LocalStorageManager.PREF_MANAGED_USE_FILE_PICKER);
+    }
 }

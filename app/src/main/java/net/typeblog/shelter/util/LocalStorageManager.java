@@ -19,6 +19,13 @@ public class LocalStorageManager {
     public static final String PREF_CAMERA_PROXY = "camera_proxy";
     public static final String PREF_BLOCK_CONTACTS_SEARCHING = "block_contacts_searching";
 
+    public static final String PREF_PARENT_PICK_FOLDER = "parent_pick_folder";
+    public static final String PREF_MANAGED_PICK_FOLDER = "managed_pick_folder";
+    public static final String PREF_PARENT_PICK_FILE = "parent_pick_file";
+    public static final String PREF_MANAGED_PICK_FILE = "managed_pick_file";
+    public static final String PREF_PARENT_USE_FILE_PICKER = "parent_use_file_picker";
+    public static final String PREF_MANAGED_USE_FILE_PICKER = "managed_use_file_picker";
+
     private static final String LIST_DIVIDER = ",";
 
     private static LocalStorageManager sInstance = null;

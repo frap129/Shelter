@@ -88,6 +88,20 @@
     <string name="settings_bug_report_url" translatable="false">https://lists.sr.ht/~petercxy/shelter</string>
     <string name="settings_patreon" translatable="false">Patreon</string>
     <string name="settings_patreon_url" translatable="false">https://www.patreon.com/PeterCxy</string>
+    <string name="settings_intents">Intents</string>
+    <string name="settings_intents_desc">USE WITH CAUTION! Toggle cross profile actions.</string>
+    <string name="settings_parent_pick_folder">Allow Main Profile to choose Work Folders</string>
+    <string name="settings_parent_pick_folder_desc">Allow apps on the main profile to choose folders on the work profile through DocumentsUI.</string>
+    <string name="settings_managed_pick_folder">Allow Work Profile to choose Main Folders</string>
+    <string name="settings_managed_pick_folder_desc">Allow apps on the work profile to choose folders on the main profile through DocumentsUI.</string>
+    <string name="settings_parent_pick_file">Allow Main Profile to choose Work File</string>
+    <string name="settings_parent_pick_file_desc">Allow apps on the main profile to choose files on the work profile through DocumentsUI.</string>
+    <string name="settings_managed_pick_file">Allow Work Profile to choose Main Files</string>
+    <string name="settings_managed_pick_file_desc">Allow apps on the work profile to choose files on the main profile through DocumentsUI.</string>
+    <string name="settings_parent_use_file_picker">Allow Main Profile to use any File Picker</string>
+    <string name="settings_parent_use_file_picker_desc">Allow apps on the main profile to choose files on the work profile through any file picker.</string>
+    <string name="settings_managed_use_file_picker">Allow Work Profile to use any File Picker</string>
+    <string name="settings_managed_use_file_picker_desc">Allow apps on the work profile to choose files on the main profile through any file picker.</string>
 
     <!-- Toast Long Texts -->
     <string name="provision_finished">Shelter setup complete. Now restarting Shelter. If Shelter didn\'t start automatically, you may launch it again from your launcher.</string>
